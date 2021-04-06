@@ -1,7 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import Todo from '../views/Todo.vue'
 
 const routes = [
+  {
+    path: '/todo',
+    name: 'Todo',
+    component: Todo
+  },
+
   {
     path: '/',
     name: 'Home',
