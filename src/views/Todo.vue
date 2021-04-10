@@ -25,6 +25,9 @@
         :todo="item.todo"
         :edit="item.tid===edit"
         @check="value=>checkHandler(item.tid,value)"
+        @editThis="edit=item.tid"
+        @editComplete="value=>editCompleteHandler(item.tid,value)"
+         @editCancel="edit=null "
       />
     </ul>
   </div>
@@ -54,6 +57,7 @@ export default {
     $route: {
       immediate: true,
       handler: function (route) {
+        this.edit = null
         // check query
         this.filter = route.query.filter || 'all'
       }
@@ -63,6 +67,11 @@ export default {
     checkHandler (tid, done) {
       console.log(tid, done)
       this.$store.dispatch('CHECK_TODO', { tid, done })
+    },
+    editCompleteHandler (tid, content) {
+      this.edit = null
+      console.log(tid, content)
+      this.$store.dispatch('UPDATE_TODO', { tid, content })
     }
   },
   components: {

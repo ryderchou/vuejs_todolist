@@ -59,12 +59,13 @@ export default createStore({
       // 3.return
       return { todos }
     },
-    UPDATE_TODO ({ commit }, { tid, todo }) {
+    UPDATE_TODO ({ commit, state }, { tid, content }) {
       // UPDATE_TODO ({ commit }, { tid, content }) {
       // 1.PATCH   // axios.patch()
+      if (state.todos[tid].content === content) { return }
       const todos = STORE.load()
-      todos.splice(tid, 1, todo)
-      // todos[tid].content=content
+      // todos.splice(tid, 1, todo)
+      todos[tid].content = content
       STORE.save(todos)
 
       // 2.寫入state commit mutation
@@ -72,7 +73,7 @@ export default createStore({
       // 3.return
       return {
         tid,
-        todo
+        todo: todos[tid]
         // todo:todos[tid]
       }
     },
@@ -92,6 +93,7 @@ export default createStore({
         todo: todos[tid]
       }
     },
+
     DELETE_TODO ({ commit }, { tid }) {
       // 1.DELETE   // axios.delete()
       const todos = STORE.load()
