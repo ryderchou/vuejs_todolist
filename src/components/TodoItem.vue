@@ -8,7 +8,7 @@
     </template>
     <template v-else>
       <div>
-        <input type="text" v-model="editContent"  >
+        <input type="text" v-model="editContent"  v-focus="editContent">
         <button @click="$emit('editComplete',editContent)">完成</button>
         <button @click="$emit('editCancel')">取消</button>
       </div>
