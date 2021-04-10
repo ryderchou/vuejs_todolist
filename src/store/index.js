@@ -4,7 +4,8 @@ import LocalStorage from '../modules/localStorage'
 const STORE = new LocalStorage('todo-vue')
 export default createStore({
   state: {
-    todos: [{ content: '123123', done: false }, { content: '456456', done: true }, { content: '789789', done: false }]
+    // todos: [{ content: '123123', done: false }, { content: '456456', done: true }, { content: '789789', done: false }]
+    todos: []
   },
   getters: {
     list (state) {
@@ -50,7 +51,7 @@ export default createStore({
         todo
       }
     },
-    READ_TODO ({ commit }) {
+    READ_TODOS ({ commit }) {
       // 1.讀取 or GET
       const todos = STORE.load()
       // 2.寫入state commit mutation
@@ -73,6 +74,22 @@ export default createStore({
         tid,
         todo
         // todo:todos[tid]
+      }
+    },
+    CHECK_TODO ({ commit }, { tid, done }) {
+      // UPDATE_TODO ({ commit }, { tid, content }) {
+      // 1.PATCH   // axios.patch()
+      const todos = STORE.load()
+      todos[tid].done = done
+      // todos[tid].content=content
+      STORE.save(todos)
+
+      // 2.寫入state commit mutation
+      commit('SET_TODOS', todos)
+      // 3.return
+      return {
+        tid,
+        todo: todos[tid]
       }
     },
     DELETE_TODO ({ commit }, { tid }) {
